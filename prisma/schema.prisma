@@ -55,7 +55,7 @@ model Season {
   id       String @id @default(cuid())
   number   Int    @unique
   name     String
-  status   String @default("upcoming") // upcoming, active, completed
+  status   String @default("upcoming")
   startDate DateTime?
   endDate   DateTime?
   createdAt DateTime @default(now())
@@ -70,7 +70,7 @@ model Survivor {
   name              String
   seasonId          String
   imageUrl          String?
-  eliminatedEpisode Int?     // null if still in game
+  eliminatedEpisode Int?
   isWinner          Boolean  @default(false)
   createdAt         DateTime @default(now())
 
@@ -144,7 +144,7 @@ model Score {
   playerTeamId String
   survivorId   String
   episodeId    String
-  category     String // immunity, reward, idol_found, etc.
+  category     String
   points       Int
   description  String?
   createdAt    DateTime @default(now())
