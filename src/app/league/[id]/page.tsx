@@ -28,11 +28,6 @@ export default async function LeaguePage({ params }: PageProps) {
       playerTeams: {
         include: {
           user: true,
-          survivors: {
-            include: {
-              survivor: true,
-            },
-          },
         },
         orderBy: {
           totalScore: "desc",
@@ -92,9 +87,7 @@ export default async function LeaguePage({ params }: PageProps) {
             </div>
             <div className="text-right">
               <p className="text-gray-400 text-sm">Status</p>
-              <p className="text-lg font-medium">
-                {(userTeam.survivors?.length || 0) > 0 ? "Draft Complete" : "Draft Pending"}
-              </p>
+              <p className="text-lg font-medium">Active</p>
             </div>
           </div>
         </div>
@@ -121,12 +114,11 @@ export default async function LeaguePage({ params }: PageProps) {
                   <span className="text-xl font-bold text-gray-500 w-8">#{index + 1}</span>
                   <div>
                     <p className="font-medium">
-                      {team.user.name || "Anonymous"}
+                      {team.user?.name || "Anonymous"}
                       {team.userId === userId && (
                         <span className="ml-2 text-xs bg-orange-600 px-2 py-0.5 rounded">You</span>
                       )}
                     </p>
-                    <p className="text-sm text-gray-400">{(team.survivors?.length || 0)} survivors</p>
                   </div>
                 </div>
                 <span className="text-xl font-bold text-orange-500">{team.totalScore} pts</span>
@@ -149,9 +141,9 @@ export default async function LeaguePage({ params }: PageProps) {
               className="flex items-center gap-2 bg-gray-700 px-3 py-2 rounded-lg"
             >
               <div className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center text-sm font-bold">
-                {member.user.name?.charAt(0) || "?"}
+                {member.user?.name?.charAt(0) || "?"}
               </div>
-              <span className="text-sm">{member.user.name || "Anonymous"}</span>
+              <span className="text-sm">{member.user?.name || "Anonymous"}</span>
               {member.userId === league.ownerId && (
                 <span className="text-xs bg-yellow-600 px-1.5 py-0.5 rounded">Owner</span>
               )}
