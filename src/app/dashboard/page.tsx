@@ -76,7 +76,7 @@ export default async function Dashboard() {
 
       {/* Survivor 50 Info Card */}
       <div className="bg-gradient-to-r from-orange-900 to-red-900 rounded-2xl p-8 border border-orange-700">
-        <div classLego="flex items-start gap-6">
+        <div className="flex items-start gap-6">
           <div className="text-5xl">🏝️</div>
           <div>
             <h2 className="text-2xl font-bold mb-2">Survivor 50: Legends</h2>
