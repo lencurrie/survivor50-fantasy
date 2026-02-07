@@ -28,6 +28,11 @@ export default async function LeaguePage({ params }: PageProps) {
       playerTeams: {
         include: {
           user: true,
+          survivors: {
+            include: {
+              survivor: true,
+            },
+          },
         },
         orderBy: {
           totalScore: "desc",
@@ -88,7 +93,7 @@ export default async function LeaguePage({ params }: PageProps) {
             <div className="text-right">
               <p className="text-gray-400 text-sm">Status</p>
               <p className="text-lg font-medium">
-                {userTeam.survivors.length > 0 ? "Draft Complete" : "Draft Pending"}
+                {(userTeam.survivors?.length || 0) > 0 ? "Draft Complete" : "Draft Pending"}
               </p>
             </div>
           </div>
@@ -121,7 +126,7 @@ export default async function LeaguePage({ params }: PageProps) {
                         <span className="ml-2 text-xs bg-orange-600 px-2 py-0.5 rounded">You</span>
                       )}
                     </p>
-                    <p className="text-sm text-gray-400">{team.survivors.length} survivors</p>
+                    <p className="text-sm text-gray-400">{(team.survivors?.length || 0)} survivors</p>
                   </div>
                 </div>
                 <span className="text-xl font-bold text-orange-500">{team.totalScore} pts</span>
