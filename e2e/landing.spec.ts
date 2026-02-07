@@ -66,10 +66,11 @@ test.describe("Survivor 50 Fantasy League", () => {
   test("scoring points are displayed", async ({ page }) => {
     await page.goto("/");
     
-    // Check for scoring values
-    await expect(page.getByText("+2")).toBeVisible(); // Immunity
-    await expect(page.getByText("+5")).toBeVisible(); // Idol
-    await expect(page.getByText("+13")).toBeVisible(); // Winner pick
+    // Check for scoring values in the scoring section
+    const scoringSection = page.locator("section:has-text('SCORING SYSTEM')");
+    await expect(scoringSection.getByText("+2")).toBeVisible(); // Immunity
+    await expect(scoringSection.getByText("+5")).toBeVisible(); // Idol
+    await expect(scoringSection.getByText("+13")).toBeVisible(); // Winner pick
   });
 
   test("footer is visible", async ({ page }) => {
@@ -85,14 +86,14 @@ test.describe("Authentication Flows", () => {
     await page.goto("/sign-in");
     
     // Clerk sign-in should be present
-    await expect(page.locator("[data-clerk-component]").or(page.locator("form"))).toBeVisible();
+    await expect(page.locator("[data-clerk-component='SignIn']")).toBeVisible();
   });
 
   test("sign up page loads", async ({ page }) => {
     await page.goto("/sign-up");
     
     // Clerk sign-up should be present
-    await expect(page.locator("[data-clerk-component]").or(page.locator("form"))).toBeVisible();
+    await expect(page.locator("[data-clerk-component='SignUp']")).toBeVisible();
   });
 });
 
