@@ -1,10 +1,12 @@
+"use client";
+
 import { useState } from "react";
 import { Contestant, AvailableSurvivorCard } from "./components/AvailableSurvivorCard";
 import { TribeEmblem } from "./components/TribeEmblem";
 import { TeamRosterCard } from "./components/TeamRosterCard";
 import { Button } from "./components/ui/button";
 import { Flame, Menu, Users } from "lucide-react";
-import exampleImage from 'figma:asset/68ff3e73ca8174b3a4755dca527f8c0de157a4b4.png';
+const exampleImage = "/survivor-contestants.png";
 
 // Mock contestant data
 const initialContestants: Contestant[] = [
