@@ -12,7 +12,7 @@ export default async function LeaguePage({ params }: PageProps) {
   const { userId } = await auth();
 
   if (!userId) {
-    return <div>Please sign in</div>;
+    return <div className="text-[#f5f1e8] text-center py-12">Please sign in</div>;
   }
 
   const league = await prisma.league.findUnique({
@@ -45,17 +45,17 @@ export default async function LeaguePage({ params }: PageProps) {
   const userRank = league.playerTeams.findIndex((pt) => pt.userId === userId) + 1;
 
   return (
-    <div className="space-y-8">
+    <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
       {/* Header */}
       <div className="flex justify-between items-start">
         <div>
-          <h1 className="text-3xl font-bold">{league.name}</h1>
-          <p className="text-gray-400">
-            {league.season.name} • {league.members.length} members
+          <h1 className="text-3xl font-bold text-[#f5f1e8]" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{league.name}</h1>
+          <p className="text-[#c4b59a]" style={{ fontFamily: "'Teko', sans-serif", fontSize: "18px" }}>
+            {league.season.name} &bull; {league.members.length} members
           </p>
         </div>
         <div className="flex gap-2">
-          <button className="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg flex items-center gap-2 transition">
+          <button className="bg-[#4a7b7c] hover:bg-[#3a6b6c] text-white px-4 py-2 rounded-lg flex items-center gap-2 transition border-2 border-[#2c5f60]" style={{ fontFamily: "'Teko', sans-serif" }}>
             <Share2 size={18} />
             Share
           </button>
@@ -64,64 +64,66 @@ export default async function LeaguePage({ params }: PageProps) {
 
       {/* Invite Code */}
       {isOwner && (
-        <div className="bg-orange-900/30 border border-orange-700 rounded-xl p-4 flex items-center justify-between">
+        <div className="bg-[#d4c5a9] rounded-lg p-4 flex items-center justify-between border-4 border-[#8b6f47] shadow-xl">
           <div>
-            <p className="text-sm text-orange-300">Invite Code</p>
-            <p className="text-2xl font-mono font-bold tracking-widest">{league.code}</p>
+            <p className="text-sm text-[#6b5635] font-bold" style={{ fontFamily: "'Teko', sans-serif" }}>Invite Code</p>
+            <p className="text-2xl font-mono font-bold tracking-widest text-[#d97839]" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{league.code}</p>
           </div>
-          <p className="text-sm text-gray-400">Share this code with friends to join</p>
+          <p className="text-sm text-[#6b5635]">Share this code with friends to join</p>
         </div>
       )}
 
       {/* Your Stats */}
       {userTeam && (
-        <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+        <div className="bg-[#d4c5a9] rounded-lg p-6 border-4 border-[#8b6f47] shadow-xl">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-400 text-sm">Your Rank</p>
-              <p className="text-3xl font-bold">#{userRank}</p>
+              <p className="text-[#6b5635] text-sm font-bold" style={{ fontFamily: "'Teko', sans-serif" }}>Your Rank</p>
+              <p className="text-3xl font-bold text-[#2c2416]" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>#{userRank}</p>
             </div>
             <div className="text-center">
-              <p className="text-gray-400 text-sm">Total Points</p>
-              <p className="text-3xl font-bold text-orange-500">{userTeam.totalScore}</p>
+              <p className="text-[#6b5635] text-sm font-bold" style={{ fontFamily: "'Teko', sans-serif" }}>Total Points</p>
+              <p className="text-3xl font-bold text-[#d97839]" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{userTeam.totalScore}</p>
             </div>
             <div className="text-right">
-              <p className="text-gray-400 text-sm">Status</p>
-              <p className="text-lg font-medium">Active</p>
+              <p className="text-[#6b5635] text-sm font-bold" style={{ fontFamily: "'Teko', sans-serif" }}>Status</p>
+              <p className="text-lg font-bold text-[#2c2416]" style={{ fontFamily: "'Teko', sans-serif" }}>Active</p>
             </div>
           </div>
         </div>
       )}
 
       {/* Leaderboard */}
-      <div className="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
-        <div className="p-6 border-b border-gray-700 flex items-center gap-2">
-          <Trophy className="text-yellow-500" />
-          <h2 className="text-xl font-bold">Leaderboard</h2>
+      <div className="bg-[#d4c5a9] rounded-lg border-4 border-[#8b6f47] shadow-xl overflow-hidden">
+        <div className="p-6 border-b-2 border-[#8b6f47] flex items-center gap-2">
+          <Trophy className="text-[#d97839]" />
+          <h2 className="text-xl font-bold text-[#2c2416]" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>Leaderboard</h2>
         </div>
-        <div className="divide-y divide-gray-700">
+        <div className="divide-y divide-[#8b6f47]/30">
           {league.playerTeams.length === 0 ? (
-            <p className="p-6 text-gray-400 text-center">No teams yet</p>
+            <p className="p-6 text-[#6b5635] text-center">No teams yet</p>
           ) : (
             league.playerTeams.map((team, index) => (
               <div
                 key={team.id}
                 className={`p-4 flex items-center justify-between ${
-                  team.userId === userId ? "bg-orange-900/20" : ""
+                  team.userId === userId ? "bg-[#d97839]/10" : ""
                 }`}
               >
                 <div className="flex items-center gap-4">
-                  <span className="text-xl font-bold text-gray-500 w-8">#{index + 1}</span>
+                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[#8b6f47] text-white font-bold" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                    {index + 1}
+                  </span>
                   <div>
-                    <p className="font-medium">
+                    <p className="font-bold text-[#2c2416]" style={{ fontFamily: "'Teko', sans-serif", fontSize: "18px" }}>
                       {team.user?.name || "Anonymous"}
                       {team.userId === userId && (
-                        <span className="ml-2 text-xs bg-orange-600 px-2 py-0.5 rounded">You</span>
+                        <span className="ml-2 text-xs bg-[#d97839] text-white px-2 py-0.5 rounded">You</span>
                       )}
                     </p>
                   </div>
                 </div>
-                <span className="text-xl font-bold text-orange-500">{team.totalScore} pts</span>
+                <span className="text-xl font-bold text-[#d97839]" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{team.totalScore} PTS</span>
               </div>
             ))
           )}
@@ -129,23 +131,23 @@ export default async function LeaguePage({ params }: PageProps) {
       </div>
 
       {/* Members */}
-      <div className="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
-        <div className="p-6 border-b border-gray-700 flex items-center gap-2">
-          <Users className="text-blue-500" />
-          <h2 className="text-xl font-bold">Members</h2>
+      <div className="bg-[#d4c5a9] rounded-lg border-4 border-[#8b6f47] shadow-xl overflow-hidden">
+        <div className="p-6 border-b-2 border-[#8b6f47] flex items-center gap-2">
+          <Users className="text-[#4a9fb8]" />
+          <h2 className="text-xl font-bold text-[#2c2416]" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>Members</h2>
         </div>
         <div className="p-6 flex flex-wrap gap-3">
           {league.members.map((member) => (
             <div
               key={member.id}
-              className="flex items-center gap-2 bg-gray-700 px-3 py-2 rounded-lg"
+              className="flex items-center gap-2 bg-[#c4b59a] px-3 py-2 rounded-lg border-2 border-[#8b6f47]"
             >
-              <div className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center text-sm font-bold">
+              <div className="w-8 h-8 bg-[#d97839] rounded-full flex items-center justify-center text-sm font-bold text-white" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
                 {member.user?.name?.charAt(0) || "?"}
               </div>
-              <span className="text-sm">{member.user?.name || "Anonymous"}</span>
+              <span className="text-sm text-[#2c2416] font-bold" style={{ fontFamily: "'Teko', sans-serif" }}>{member.user?.name || "Anonymous"}</span>
               {member.userId === league.ownerId && (
-                <span className="text-xs bg-yellow-600 px-1.5 py-0.5 rounded">Owner</span>
+                <span className="text-xs bg-[#d97839] text-white px-1.5 py-0.5 rounded font-bold">Owner</span>
               )}
             </div>
           ))}
