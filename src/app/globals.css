@@ -1,218 +1,129 @@
-/* Survivor 50 Fantasy - Tribal Design System */
+/* Superdesign Generated Tribal Theme */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-archivo: 'Archivo', sans-serif;
+  --font-space: 'Space Grotesk', sans-serif;
+}
+
+body {
+  font-family: var(--font-space);
+  background-color: #0a0a0a;
+}
+
+h1, h2, h3, button {
+  font-family: var(--font-archivo);
+}
 
 /* Tribal Pattern Background */
-.tribal-bg {
-  background-color: #1a1814;
-  background-image: 
-    radial-gradient(circle at 20% 50%, rgba(139, 90, 43, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 50%, rgba(160, 82, 45, 0.1) 0%, transparent 50%),
-    repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 10px,
-      rgba(139, 90, 43, 0.03) 10px,
-      rgba(139, 90, 43, 0.03) 20px
-    );
+.tribal-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40' fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
 }
 
-/* Circular Buff/Coat of Arms */
-.buff-circle {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #8B4513 0%, #A0522D 50%, #CD853F 100%);
-  border: 4px solid #D2691E;
-  box-shadow: 
-    0 0 20px rgba(210, 105, 30, 0.5),
-    inset 0 0 30px rgba(0, 0, 0, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
 }
 
-.buff-circle::before {
-  content: '';
-  position: absolute;
-  inset: 8px;
-  border-radius: 50%;
-  border: 2px dashed rgba(255, 255, 255, 0.3);
+::-webkit-scrollbar-track {
+  background: #1c1917;
 }
 
-.buff-circle::after {
-  content: '';
-  position: absolute;
-  inset: 4px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 200, 100, 0.4);
+::-webkit-scrollbar-thumb {
+  background: #44403c;
+  border-radius: 10px;
 }
 
-/* Avatar with Tribal Border */
-.avatar-tribal {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  border: 3px solid transparent;
-  background: linear-gradient(#1a1814, #1a1814) padding-box,
-              linear-gradient(135deg, #D2691E, #8B4513, #CD853F) border-box;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+::-webkit-scrollbar-thumb:hover {
+  background: #57534e;
 }
 
-/* XP Progress Bar - Segmented */
+/* Glow Effects */
+.glow-orange {
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.2);
+}
+
+/* XP Progress Bar */
 .xp-bar {
+  background: rgba(41, 37, 36, 0.5);
+  border-radius: 9999px;
   height: 8px;
-  background: #2d2924;
-  border-radius: 4px;
   overflow: hidden;
-  display: flex;
-  gap: 2px;
-  padding: 2px;
+  border: 1px solid rgba(68, 64, 60, 0.5);
 }
 
-.xp-segment {
-  flex: 1;
-  background: #3d3934;
-  border-radius: 2px;
-  transition: background 0.3s;
-}
-
-.xp-segment.filled {
-  background: linear-gradient(90deg, #ff6b35 0%, #f7931e 100%);
-  box-shadow: 0 0 8px rgba(247, 147, 30, 0.5);
-}
-
-/* NEXT Button */
-.btn-next {
-  background: linear-gradient(180deg, #ff6b35 0%, #d9471e 100%);
-  border: none;
-  border-radius: 16px;
-  padding: 16px 32px;
-  color: white;
-  font-weight: 900;
-  font-size: 18px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  box-shadow: 
-    0 4px 0 #a03518,
-    0 8px 20px rgba(255, 107, 53, 0.4);
-  transition: all 0.1s;
-}
-
-.btn-next:active {
-  transform: translateY(4px);
-  box-shadow: 
-    0 0 0 #a03518,
-    0 4px 10px rgba(255, 107, 53, 0.4);
-}
-
-/* Tribe Cards */
-.tribe-card {
-  border-radius: 20px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-}
-
-.tribe-card-blue {
-  background: linear-gradient(135deg, #1e3a5f 0%, #2d4a6f 100%);
-  border: 2px solid #3d6a9f;
-}
-
-.tribe-card-purple {
-  background: linear-gradient(135deg, #4a1e5f 0%, #5f2d7f 100%);
-  border: 2px solid #8f3d9f;
-}
-
-/* Member Row */
-.member-row {
-  background: linear-gradient(90deg, rgba(45, 41, 36, 0.9) 0%, rgba(35, 31, 26, 0.9) 100%);
-  border: 1px solid rgba(139, 90, 43, 0.3);
-  border-radius: 16px;
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-/* Header with Tribal Pattern */
-.header-tribal {
-  background: linear-gradient(180deg, #0f0d0a 0%, #1a1814 100%);
-  border-bottom: 2px solid;
-  border-image: linear-gradient(90deg, transparent, #8B4513, #D2691E, #8B4513, transparent) 1;
-  position: relative;
-}
-
-.header-tribal::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100px;
-  height: 4px;
-  background: linear-gradient(90deg, transparent, #ff6b35, transparent);
-}
-
-/* Circular Voting Dial */
-.voting-dial {
-  width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  background: radial-gradient(circle at center, #2a2620 0%, #1a1814 70%);
-  border: 8px solid transparent;
-  background-clip: padding-box;
-  position: relative;
-  box-shadow: 
-    0 0 0 2px #8B4513,
-    0 0 0 4px #1a1814,
-    0 0 0 6px #D2691E,
-    inset 0 0 60px rgba(0, 0, 0, 0.5);
-}
-
-.voting-dial-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #ff6b35 0%, #d9471e 100%);
-  box-shadow: 0 0 30px rgba(255, 107, 53, 0.5);
-}
-
-/* Typography */
-.title-tribal {
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  background: linear-gradient(180deg, #ffffff 0%, #d4a574 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 2px 10px rgba(212, 165, 116, 0.3);
-}
-
-/* Card Hover Effect */
-.card-hover {
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
-}
-
-.card-hover::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
+.xp-fill {
+  background: linear-gradient(90deg, #ca8a04, #facc15);
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-  transition: left 0.5s;
+  border-radius: 9999px;
+  box-shadow: 0 0 10px rgba(234, 179, 8, 0.3);
 }
 
-.card-hover:hover::before {
-  left: 100%;
+/* Voting Dial Animation */
+@keyframes slow-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-slow-spin {
+  animation: slow-spin 20s linear infinite;
+}
+
+/* Member Card Selected State */
+.member-selected {
+  border-color: #f97316 !important;
+  box-shadow: 0 0 30px rgba(249, 115, 22, 0.2);
+}
+
+/* Cast Vote Button */
+.btn-cast-vote {
+  background: linear-gradient(90deg, #ea580c, #dc2626);
+  border-bottom: 4px solid #991b1b;
+  transition: all 0.15s;
+}
+
+.btn-cast-vote:hover {
+  transform: scale(1.02);
+  box-shadow: 0 20px 40px -15px rgba(220, 38, 38, 0.5);
+}
+
+.btn-cast-vote:active {
+  transform: scale(0.95);
+  border-bottom-width: 2px;
+}
+
+/* Tribe Card Effects */
+.tribe-card {
+  transition: all 0.3s;
+}
+
+.tribe-card:hover {
+  transform: scale(1.05);
+}
+
+/* Bottom Nav Rounded */
+.nav-rounded {
+  border-top-left-radius: 32px;
+  border-top-right-radius: 32px;
+}
+
+/* Flame Pulse Animation */
+@keyframes flame-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-flame {
+  animation: flame-pulse 2s ease-in-out infinite;
 }
