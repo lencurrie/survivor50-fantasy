@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Survivor 50th Anniversary Fantasy League
+
+A fantasy league website for Survivor Season 50 where fans can draft survivors, predict eliminations, and compete for points.
+
+## Features
+
+- **User Authentication** - Sign up/login with Clerk
+- **Leagues** - Create or join private leagues with invite codes
+- **Draft System** - Snake draft to pick your survivor team
+- **Weekly Predictions** - Guess who gets voted out each episode
+- **Points System** - Earn points for correct predictions and survivor achievements
+- **Leaderboards** - Track your standing in real-time
+
+## Tech Stack
+
+- Next.js 14 (App Router)
+- TypeScript
+- Tailwind CSS
+- Clerk (Authentication)
+- Prisma + PostgreSQL
+- Vercel (Hosting)
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Set up environment variables (see `.env.example`)
+4. Run database migrations: `npx prisma migrate dev`
+5. Start the dev server: `npm run dev`
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Environment Variables
+
+```env
+# Database
+DATABASE_URL="postgresql://..."
+
+# Clerk Auth
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="pk_..."
+CLERK_SECRET_KEY="sk_..."
+NEXT_PUBLIC_CLERK_SIGN_IN_URL="/sign-in"
+NEXT_PUBLIC_CLERK_SIGN_UP_URL="/sign-up"
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL="/dashboard"
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL="/dashboard"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scoring System
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Survivor Achievements
+| Action | Points |
+|--------|--------|
+| Wins immunity challenge | 2 |
+| Wins reward challenge | 1 |
+| Finds hidden immunity idol | 1 |
+| Plays idol successfully | 5 |
+| Finds advantage | 1 |
+| Reads tree mail | 1 |
+| Makes fire | 1 |
+| Wins island challenge | 1 |
+| Merges to new tribe | 1 |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Predictions
+- Correctly guess eliminated survivor: 1-10 points (allocated by user)
 
-## Learn More
+### Winner Pick
+- Pick season winner before episode 1: 13 points
+- Each episode you keep the same pick: +1 point
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Deployed on Vercel: [https://survivor50-fantasy.vercel.app](https://survivor50-fantasy.vercel.app)

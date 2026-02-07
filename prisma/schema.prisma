@@ -1,0 +1,177 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  leagues       LeagueMember[]
+  playerTeams   PlayerTeam[]
+  predictions   Prediction[]
+  leaguesOwned  League[]
+}
+
+model League {
+  id          String   @id @default(cuid())
+  name        String
+  code        String   @unique
+  seasonId    String
+  ownerId     String
+  isDrafting  Boolean  @default(false)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  season      Season       @relation(fields: [seasonId], references: [id])
+  owner       User         @relation(fields: [ownerId], references: [id])
+  members     LeagueMember[]
+  playerTeams PlayerTeam[]
+  messages    Message[]
+}
+
+model LeagueMember {
+  id       String @id @default(cuid())
+  leagueId String
+  userId   String
+  joinedAt DateTime @default(now())
+
+  league League @relation(fields: [leagueId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([leagueId, userId])
+}
+
+model Season {
+  id       String @id @default(cuid())
+  number   Int    @unique
+  name     String
+  status   String @default("upcoming") // upcoming, active, completed
+  startDate DateTime?
+  endDate   DateTime?
+  createdAt DateTime @default(now())
+
+  leagues   League[]
+  survivors Survivor[]
+  episodes  Episode[]
+}
+
+model Survivor {
+  id                String   @id @default(cuid())
+  name              String
+  seasonId          String
+  imageUrl          String?
+  eliminatedEpisode Int?     // null if still in game
+  isWinner          Boolean  @default(false)
+  createdAt         DateTime @default(now())
+
+  season      Season        @relation(fields: [seasonId], references: [id])
+  teamMembers TeamSurvivor[]
+  predictions Prediction[]
+  scores      Score[]
+}
+
+model Episode {
+  id          String   @id @default(cuid())
+  seasonId    String
+  number      Int
+  title       String?
+  airDate     DateTime?
+  isCompleted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  season      Season       @relation(fields: [seasonId], references: [id])
+  predictions Prediction[]
+  scores      Score[]
+}
+
+model PlayerTeam {
+  id         String @id @default(cuid())
+  userId     String
+  leagueId   String
+  draftOrder Int?
+  totalScore Int    @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user      User          @relation(fields: [userId], references: [id])
+  league    League        @relation(fields: [leagueId], references: [id], onDelete: Cascade)
+  survivors TeamSurvivor[]
+  predictions Prediction[]
+  scores    Score[]
+}
+
+model TeamSurvivor {
+  id           String @id @default(cuid())
+  playerTeamId String
+  survivorId   String
+
+  playerTeam PlayerTeam @relation(fields: [playerTeamId], references: [id], onDelete: Cascade)
+  survivor   Survivor   @relation(fields: [survivorId], references: [id], onDelete: Cascade)
+
+  @@unique([playerTeamId, survivorId])
+}
+
+model Prediction {
+  id             String @id @default(cuid())
+  userId         String
+  playerTeamId   String
+  episodeId      String
+  survivorId     String
+  pointsAllocated Int   @default(0)
+  isCorrect      Boolean?
+  createdAt      DateTime @default(now())
+
+  user       User       @relation(fields: [userId], references: [id])
+  playerTeam PlayerTeam @relation(fields: [playerTeamId], references: [id])
+  episode    Episode    @relation(fields: [episodeId], references: [id])
+  survivor   Survivor   @relation(fields: [survivorId], references: [id])
+
+  @@unique([playerTeamId, episodeId, survivorId])
+}
+
+model Score {
+  id           String @id @default(cuid())
+  playerTeamId String
+  survivorId   String
+  episodeId    String
+  category     String // immunity, reward, idol_found, etc.
+  points       Int
+  description  String?
+  createdAt    DateTime @default(now())
+
+  playerTeam PlayerTeam @relation(fields: [playerTeamId], references: [id])
+  survivor   Survivor   @relation(fields: [survivorId], references: [id])
+  episode    Episode    @relation(fields: [episodeId], references: [id])
+}
+
+model Message {
+  id       String @id @default(cuid())
+  leagueId String
+  userId   String
+  content  String
+  sentAt   DateTime @default(now())
+
+  league League @relation(fields: [leagueId], references: [id], onDelete: Cascade)
+}
+
+model WinnerPick {
+  id           String @id @default(cuid())
+  userId       String
+  leagueId     String
+  survivorId   String
+  episodePicked Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([userId, leagueId])
+}

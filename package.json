@@ -9,7 +9,12 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.37.3",
+    "@prisma/client": "^7.3.0",
+    "@supabase/supabase-js": "^2.95.3",
+    "lucide-react": "^0.563.0",
     "next": "16.1.6",
+    "prisma": "^7.3.0",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
