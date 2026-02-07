@@ -3,26 +3,26 @@ import { test, expect } from "@playwright/test";
 test.describe("Survivor 50 Fantasy League", () => {
   test("homepage loads with correct branding", async ({ page }) => {
     await page.goto("/");
-    
-    // Check for Survivor branding
+
+    // Check for Survivor branding (new design)
     await expect(page.getByText("SURVIVOR")).toBeVisible();
-    await expect(page.getByText("50 FANTASY")).toBeVisible();
-    
+    await expect(page.getByText("FANTASY LEAGUE")).toBeVisible();
+
     // Check for CTA buttons
     await expect(page.getByRole("button", { name: /ENTER THE GAME|GO TO DASHBOARD/i })).toBeVisible();
     await expect(page.getByRole("link", { name: "HOW IT WORKS" })).toBeVisible();
   });
 
-  test("sign up button navigates to sign-up page", async ({ page }) => {
+  test("sign up button opens sign-up modal", async ({ page }) => {
     await page.goto("/");
-    
+
     // Click the main CTA
     const signUpButton = page.getByRole("button", { name: "ENTER THE GAME" });
     await expect(signUpButton).toBeVisible();
     await signUpButton.click();
-    
-    // Should show Clerk sign-up modal or navigate to sign-up
-    await expect(page).toHaveURL(/.*sign-up.*/);
+
+    // Should show Clerk sign-up modal (iframe or modal appears)
+    await expect(page.locator("iframe[title*='Clerk']").or(page.locator("[data-clerk-component='SignUp']"))).toBeVisible({ timeout: 10000 });
   });
 
   test("features section displays correctly", async ({ page }) => {
@@ -65,12 +65,15 @@ test.describe("Survivor 50 Fantasy League", () => {
 
   test("scoring points are displayed", async ({ page }) => {
     await page.goto("/");
-    
-    // Check for scoring values in the scoring section
-    const scoringSection = page.locator("section:has-text('SCORING SYSTEM')");
-    await expect(scoringSection.getByText("+2")).toBeVisible(); // Immunity
-    await expect(scoringSection.getByText("+5")).toBeVisible(); // Idol
-    await expect(scoringSection.getByText("+13")).toBeVisible(); // Winner pick
+
+    // Check for scoring section
+    await expect(page.getByText("SCORING")).toBeVisible();
+    await expect(page.getByText("CASTAWAY ACHIEVEMENTS")).toBeVisible();
+    await expect(page.getByText("PREDICTIONS & BONUSES")).toBeVisible();
+
+    // Check for scoring values
+    await expect(page.getByText("+2").first()).toBeVisible(); // Immunity
+    await expect(page.getByText("+5").first()).toBeVisible(); // Idol
   });
 
   test("footer is visible", async ({ page }) => {
