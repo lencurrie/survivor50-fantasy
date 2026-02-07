@@ -1,12 +1,12 @@
 import { auth } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
-import { prisma } from "@/lib/db";
 import { Share2, Users, Trophy } from "lucide-react";
 
 interface PageProps {
   params: Promise<{ id: string }>;
 }
 
+// Static data for now - database will be connected later
 export default async function LeaguePage({ params }: PageProps) {
   const { id } = await params;
   const { userId } = await auth();
@@ -15,34 +15,20 @@ export default async function LeaguePage({ params }: PageProps) {
     return <div>Please sign in</div>;
   }
 
-  const league = await prisma.league.findUnique({
-    where: { id },
-    include: {
-      season: true,
-      owner: true,
-      members: {
-        include: {
-          user: true,
-        },
-      },
-      playerTeams: {
-        include: {
-          user: true,
-        },
-        orderBy: {
-          totalScore: "desc",
-        },
-      },
-    },
-  });
-
-  if (!league) {
-    notFound();
-  }
+  // Placeholder - will fetch from DB later
+  const league = {
+    id,
+    name: "Demo League",
+    code: "ABC123",
+    season: { name: "Survivor 50: Legends" },
+    ownerId: userId,
+    members: [{ id: "1", userId, user: { name: "You" } }],
+    playerTeams: [{ id: "1", userId, user: { name: "You" }, totalScore: 0 }],
+  };
 
   const isOwner = league.ownerId === userId;
   const userTeam = league.playerTeams.find((pt) => pt.userId === userId);
-  const userRank = league.playerTeams.findIndex((pt) => pt.userId === userId) + 1;
+  const userRank = 1;
 
   return (
     <div className="space-y-8">
@@ -100,31 +86,27 @@ export default async function LeaguePage({ params }: PageProps) {
           <h2 className="text-xl font-bold">Leaderboard</h2>
         </div>
         <div className="divide-y divide-gray-700">
-          {league.playerTeams.length === 0 ? (
-            <p className="p-6 text-gray-400 text-center">No teams yet</p>
-          ) : (
-            league.playerTeams.map((team, index) => (
-              <div
-                key={team.id}
-                className={`p-4 flex items-center justify-between ${
-                  team.userId === userId ? "bg-orange-900/20" : ""
-                }`}
-              >
-                <div className="flex items-center gap-4">
-                  <span className="text-xl font-bold text-gray-500 w-8">#{index + 1}</span>
-                  <div>
-                    <p className="font-medium">
-                      {team.user?.name || "Anonymous"}
-                      {team.userId === userId && (
-                        <span className="ml-2 text-xs bg-orange-600 px-2 py-0.5 rounded">You</span>
-                      )}
-                    </p>
-                  </div>
+          {league.playerTeams.map((team, index) => (
+            <div
+              key={team.id}
+              className={`p-4 flex items-center justify-between ${
+                team.userId === userId ? "bg-orange-900/20" : ""
+              }`}
+            >
+              <div className="flex items-center gap-4">
+                <span className="text-xl font-bold text-gray-500 w-8">#{index + 1}</span>
+                <div>
+                  <p className="font-medium">
+                    {team.user?.name || "Anonymous"}
+                    {team.userId === userId && (
+                      <span className="ml-2 text-xs bg-orange-600 px-2 py-0.5 rounded">You</span>
+                    )}
+                  </p>
                 </div>
-                <span className="text-xl font-bold text-orange-500">{team.totalScore} pts</span>
               </div>
-            ))
-          )}
+              <span className="text-xl font-bold text-orange-500">{team.totalScore} pts</span>
+            </div>
+          ))}
         </div>
       </div>
 
