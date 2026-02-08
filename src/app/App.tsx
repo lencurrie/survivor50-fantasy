@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Contestant, AvailableSurvivorCard } from "./components/AvailableSurvivorCard";
 import { TribeEmblem } from "./components/TribeEmblem";
 import { TeamRosterCard } from "./components/TeamRosterCard";
 import { Button } from "./components/ui/button";
-import { Users } from "lucide-react";
+import { Menu, Users } from "lucide-react";
 
 // Mock contestant data
 const initialContestants: Contestant[] = [
@@ -146,7 +147,7 @@ export default function App() {
   const earthPoints = contestants.filter(c => c.tribe === "Earth").reduce((sum, c) => sum + c.points, 0);
 
   return (
-    <div>
+    <div className="min-h-screen" style={{ backgroundColor: "#1a3d3f", fontFamily: "'Inter', sans-serif" }}>
       {/* Hero Banner */}
       <div className="relative overflow-hidden border-b-4 border-[#8b6f47]">
         <div
@@ -192,6 +193,49 @@ export default function App() {
           </div>
         </div>
       </div>
+
+      {/* Navigation */}
+      <nav className="bg-[#2c3e3f] border-b-2 border-[#8b6f47] sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between h-14">
+            <div className="flex items-center gap-6">
+              <button className="text-[#f5f1e8] hover:text-[#d97839] font-bold transition-colors" style={{ fontFamily: "'Teko', sans-serif", fontSize: "20px" }}>
+                HOME
+              </button>
+              <button className="text-[#f5f1e8] hover:text-[#d97839] font-bold transition-colors" style={{ fontFamily: "'Teko', sans-serif", fontSize: "20px" }}>
+                DRAFT
+              </button>
+              <button className="text-[#f5f1e8] hover:text-[#d97839] font-bold transition-colors" style={{ fontFamily: "'Teko', sans-serif", fontSize: "20px" }}>
+                STANDINGS
+              </button>
+              <button className="text-[#f5f1e8] hover:text-[#d97839] font-bold transition-colors" style={{ fontFamily: "'Teko', sans-serif", fontSize: "20px" }}>
+                RULES
+              </button>
+              <button className="text-[#f5f1e8] hover:text-[#d97839] font-bold transition-colors" style={{ fontFamily: "'Teko', sans-serif", fontSize: "20px" }}>
+                MY TEAM
+              </button>
+              <button className="text-[#f5f1e8] hover:text-[#d97839] font-bold transition-colors" style={{ fontFamily: "'Teko', sans-serif", fontSize: "20px" }}>
+                COMMUNITY
+              </button>
+            </div>
+            <div className="flex items-center gap-3">
+              <SignedOut>
+                <SignInButton mode="modal">
+                  <button className="text-[#f5f1e8] hover:text-[#d97839] font-bold transition-colors" style={{ fontFamily: "'Teko', sans-serif", fontSize: "20px" }}>
+                    SIGN IN
+                  </button>
+                </SignInButton>
+              </SignedOut>
+              <SignedIn>
+                <UserButton afterSignOutUrl="/" />
+              </SignedIn>
+              <button className="text-[#f5f1e8]">
+                <Menu className="w-6 h-6" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-8">
@@ -331,6 +375,12 @@ export default function App() {
         </div>
       </div>
 
+      {/* Footer */}
+      <footer className="bg-[#2c3e3f] border-t-4 border-[#8b6f47] mt-12 py-8">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <p className="text-[#c4b59a] text-sm">SURVIVOR 50 FANTASY LEAGUE © 2026</p>
+        </div>
+      </footer>
     </div>
   );
 }
