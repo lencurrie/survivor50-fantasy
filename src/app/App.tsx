@@ -1,10 +1,11 @@
+"use client";
+
 import { useState } from "react";
 import { Contestant, AvailableSurvivorCard } from "./components/AvailableSurvivorCard";
 import { TribeEmblem } from "./components/TribeEmblem";
 import { TeamRosterCard } from "./components/TeamRosterCard";
 import { Button } from "./components/ui/button";
-import { Flame, Menu, Users } from "lucide-react";
-import exampleImage from 'figma:asset/68ff3e73ca8174b3a4755dca527f8c0de157a4b4.png';
+import { Users } from "lucide-react";
 
 // Mock contestant data
 const initialContestants: Contestant[] = [
@@ -145,7 +146,7 @@ export default function App() {
   const earthPoints = contestants.filter(c => c.tribe === "Earth").reduce((sum, c) => sum + c.points, 0);
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#1a3d3f", fontFamily: "'Inter', sans-serif" }}>
+    <div>
       {/* Hero Banner */}
       <div className="relative overflow-hidden border-b-4 border-[#8b6f47]">
         <div
@@ -159,8 +160,8 @@ export default function App() {
         <div className="relative max-w-7xl mx-auto px-4 py-12 flex items-center justify-between">
           {/* Hero Image Section */}
           <div className="flex items-center gap-8 flex-1">
-            <img src={exampleImage} alt="Survivor Contestants" className="h-48 rounded-lg shadow-2xl border-4 border-[#8b6f47]" />
-            
+            <img src="/survivor-contestants.png" alt="Survivor Contestants" className="h-48 rounded-lg shadow-2xl border-4 border-[#8b6f47]" />
+
             {/* Logo */}
             <div className="text-center">
               <div className="relative inline-block">
@@ -191,37 +192,6 @@ export default function App() {
           </div>
         </div>
       </div>
-
-      {/* Navigation */}
-      <nav className="bg-[#2c3e3f] border-b-2 border-[#8b6f47] sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between h-14">
-            <div className="flex items-center gap-6">
-              <button className="text-[#f5f1e8] hover:text-[#d97839] font-bold transition-colors" style={{ fontFamily: "'Teko', sans-serif", fontSize: "20px" }}>
-                HOME
-              </button>
-              <button className="text-[#f5f1e8] hover:text-[#d97839] font-bold transition-colors" style={{ fontFamily: "'Teko', sans-serif", fontSize: "20px" }}>
-                DRAFT
-              </button>
-              <button className="text-[#f5f1e8] hover:text-[#d97839] font-bold transition-colors" style={{ fontFamily: "'Teko', sans-serif", fontSize: "20px" }}>
-                STANDINGS
-              </button>
-              <button className="text-[#f5f1e8] hover:text-[#d97839] font-bold transition-colors" style={{ fontFamily: "'Teko', sans-serif", fontSize: "20px" }}>
-                RULES
-              </button>
-              <button className="text-[#f5f1e8] hover:text-[#d97839] font-bold transition-colors" style={{ fontFamily: "'Teko', sans-serif", fontSize: "20px" }}>
-                MY TEAM
-              </button>
-              <button className="text-[#f5f1e8] hover:text-[#d97839] font-bold transition-colors" style={{ fontFamily: "'Teko', sans-serif", fontSize: "20px" }}>
-                COMMUNITY
-              </button>
-            </div>
-            <button className="text-[#f5f1e8]">
-              <Menu className="w-6 h-6" />
-            </button>
-          </div>
-        </div>
-      </nav>
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-8">
@@ -335,7 +305,7 @@ export default function App() {
                       onRemove={handleRemove}
                     />
                   ))}
-                  
+
                   {/* Empty slots */}
                   {Array.from({ length: 6 - myTeam.length }).map((_, index) => (
                     <div
@@ -361,12 +331,6 @@ export default function App() {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="bg-[#2c3e3f] border-t-4 border-[#8b6f47] mt-12 py-8">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <p className="text-[#c4b59a] text-sm">SURVIVOR 50 FANTASY LEAGUE © 2026</p>
-        </div>
-      </footer>
     </div>
   );
 }

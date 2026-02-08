@@ -36,42 +36,45 @@ export default function JoinLeague() {
   };
 
   return (
-    <div className="max-w-md mx-auto">
-      <h1 className="text-3xl font-bold mb-2">Join a League</h1>
-      <p className="text-gray-400 mb-8">Enter the invite code to join</p>
+    <div className="max-w-md mx-auto px-4 py-8">
+      <div className="bg-[#d4c5a9] rounded-lg p-8 border-4 border-[#8b6f47] shadow-2xl">
+        <h1 className="text-3xl font-bold mb-2 text-[#2c2416]" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>Join a League</h1>
+        <p className="text-[#6b5635] mb-8" style={{ fontFamily: "'Teko', sans-serif" }}>Enter the invite code to join</p>
 
-      {error && (
-        <div className="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-lg mb-6">
-          {error}
-        </div>
-      )}
+        {error && (
+          <div className="bg-red-100 border-2 border-red-400 text-red-800 px-4 py-3 rounded-lg mb-6">
+            {error}
+          </div>
+        )}
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label className="block text-sm font-medium mb-2">Invite Code</label>
-          <input
-            type="text"
-            value={code}
-            onChange={(e) => setCode(e.target.value.toUpperCase())}
-            placeholder="ABC123"
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-center text-2xl tracking-widest font-mono focus:outline-none focus:border-orange-500"
-            maxLength={6}
-            required
-          />
-        </div>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="block text-sm font-bold mb-2 text-[#6b5635]" style={{ fontFamily: "'Teko', sans-serif", fontSize: "16px" }}>Invite Code</label>
+            <input
+              type="text"
+              value={code}
+              onChange={(e) => setCode(e.target.value.toUpperCase())}
+              placeholder="ABC123"
+              className="w-full bg-[#f5f1e8] border-2 border-[#8b6f47] rounded-lg px-4 py-3 text-center text-2xl tracking-widest font-mono text-[#2c2416] focus:outline-none focus:border-[#d97839] placeholder-[#8b6f47]/50"
+              maxLength={6}
+              required
+            />
+          </div>
 
-        <button
-          type="submit"
-          disabled={loading || code.length < 6}
-          className="w-full bg-orange-600 hover:bg-orange-700 disabled:bg-gray-700 text-white px-6 py-3 rounded-lg font-bold transition"
-        >
-          {loading ? "Joining..." : "Join League"}
-        </button>
-      </form>
+          <button
+            type="submit"
+            disabled={loading || code.length < 6}
+            className="w-full bg-[#d97839] hover:bg-[#c26830] disabled:bg-[#8b6f47]/50 text-white px-6 py-3 font-bold transition border-4 border-[#8b3a1a] shadow-xl disabled:border-[#8b6f47]/30"
+            style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: "20px", letterSpacing: "0.05em" }}
+          >
+            {loading ? "Joining..." : "Join League"}
+          </button>
+        </form>
 
-      <p className="text-gray-500 text-sm mt-6 text-center">
-        Ask your league creator for the 6-character invite code.
-      </p>
+        <p className="text-[#6b5635] text-sm mt-6 text-center">
+          Ask your league creator for the 6-character invite code.
+        </p>
+      </div>
     </div>
   );
 }
